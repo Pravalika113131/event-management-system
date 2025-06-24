@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vibow - Welcome</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-700 via-blue-400 to-blue-200 min-h-screen flex flex-col">
+
+  <!-- Navigation Bar -->
+  <nav class="bg-white bg-opacity-90 shadow-md fixed top-0 left-0 w-full z-10">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-extrabold text-blue-700 tracking-widest drop-shadow-md">Vibow</h1>
+      <div class="space-x-6">
+        <a href="welcome.html" class="text-gray-700 font-semibold hover:text-blue-700 transition">Home</a>
+        <a href="index.html" class="text-gray-700 font-semibold hover:text-blue-700 transition">Sign Up / Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Welcome Section -->
+  <main class="flex-grow flex items-center justify-center pt-24 pb-12">
+    <div class="bg-white bg-opacity-90 shadow-xl rounded-3xl p-12 max-w-2xl w-full text-center animate-fade-in">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon" class="mx-auto mb-6 w-24 h-24 rounded-full shadow-lg border-4 border-blue-200">
+      <h2 class="text-4xl md:text-5xl font-extrabold text-blue-700 mb-4 drop-shadow">Welcome to Vibow!</h2>
+      <p class="text-lg md:text-xl text-gray-700 font-medium mb-6">
+        🎉 You are now part of the <span class="text-blue-700 font-bold">Ultimate Tech Fest</span> community.<br>
+        Explore events, connect with fellow tech enthusiasts, and make the most of your Vibow journey!
+      </p>
+      <a href="event-list.html" class="inline-block mt-4 px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-400 text-white text-lg rounded-full font-semibold shadow-lg hover:from-blue-800 hover:to-blue-500 transition">Browse Events</a>
+      
+    </div>
+  </main>
+
+  <style>
+    @keyframes fade-in {
+      0% { opacity: 0; transform: scale(0.98);}
+      100% { opacity: 1; transform: scale(1);}
+    }
+    .animate-fade-in {
+      animation: fade-in 1s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    body {
+      background-attachment: fixed;
+    }
+  </style>
+</body>
+</html>
