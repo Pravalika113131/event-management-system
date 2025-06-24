@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vibow - Sign Up</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-screen bg-gray-100 font-sans">
+
+
+
+  <div class="flex h-screen pt-16">
+    <div class="w-1/2 bg-blue-700 text-white flex flex-col justify-center items-center p-10">
+      <h1 class="text-5xl font-bold mb-4">Join</h1>
+      <h2 class="text-7xl font-extrabold tracking-wide">Vibow</h2>
+      <p class="mt-4 text-lg text-blue-100 max-w-md text-center">
+        Create your account to participate in the Ultimate Tech Fest!
+      </p>
+    </div>
+    <div class="w-1/2 bg-white flex items-center justify-center p-10">
+      <div class="w-full max-w-sm">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Sign Up</h2>
+        <form class="space-y-4" id="signupForm">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" id="name" name="name" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" id="email" name="email" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+          </div>
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" id="password" name="password" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+          </div>
+          <div>
+            <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+          </div>
+          <button type="submit" class="w-full py-2 px-4 bg-blue-700 text-white rounded-md hover:bg-blue-800 transition duration-200">Sign Up</button>
+        </form>
+        <p class="mt-4 text-sm text-center text-gray-500">Already have an account? <a href="index.html" class="text-blue-700 hover:underline">Login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm_password').value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      fetch('http://localhost:5000/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'success') {
+          alert('Signup successful! Welcome!');
+          window.location.href = 'welcome.html';
+        } else {
+          alert(data.message || 'Signup failed. Please try again.');
+        }
+      })
+      .catch(() => alert('Signup failed. Please try again.'));
+    });
+  </script>
+</body>
+</html>
