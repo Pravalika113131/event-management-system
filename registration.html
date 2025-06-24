@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vibow - Group Registration</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 py-10 px-4 min-h-screen">
+
+  <!-- Title -->
+  <div class="text-center mb-10">
+    <h1 class="text-4xl font-bold text-blue-700">Vibow - Group Registration</h1>
+    <p class="text-gray-600 mt-2">Register multiple participants for exciting events!</p>
+  </div>
+
+  <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+
+    <!-- Step 1: Number of Participants -->
+    <h2 class="text-xl font-semibold mb-4">1. Total Participants</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Number of Adults</label>
+        <input type="number" id="numAdults" value="0" min="0" class="mt-1 block w-full border border-gray-300 rounded-md p-2" onchange="generateForms()">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Number of Children</label>
+        <input type="number" id="numChildren" value="0" min="0" class="mt-1 block w-full border border-gray-300 rounded-md p-2" onchange="generateForms()">
+      </div>
+    </div>
+
+    <form id="participantsForm" enctype="multipart/form-data">
+      <!-- Step 2: Participant Forms -->
+      <h2 class="text-xl font-semibold mb-4">2. Participant Details</h2>
+      <div id="participantForms" class="space-y-6"></div>
+
+      <!-- Total Fee -->
+      <div class="mt-8">
+        <label class="block text-sm font-medium text-gray-700">Total Fee (₹)</label>
+        <input type="text" id="totalFee" name="registration_fee" readonly class="mt-1 block w-full border border-gray-300 rounded-md p-2 bg-gray-100">
+      </div>
+
+      <!-- Step 3: Payment Scanner -->
+      <div class="mt-10 p-6 bg-white border rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold mb-2 text-gray-800">3. Pay Registration Fee</h3>
+        <p class="text-gray-600 mb-3">Scan the QR code to pay the total registration amount.</p>
+        <div class="flex justify-center mb-2">
+          <img src="/pictures/qr-code.jpg" alt="Scan to Pay" class="w-48 h-48 border rounded-md shadow">
+        </div>
+        <p class="text-sm text-center text-gray-500">₹99 per adult | ₹49 per child</p>
+      </div>
+
+      <!-- Step 4: Upload Payment Screenshot -->
+      <div class="mt-10 p-6 bg-white border rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold mb-2 text-gray-800">4. Upload Payment Screenshot <span class="text-red-600">*</span></h3>
+        <input type="file" id="paymentScreenshot" name="paymentScreenshot" accept="image/*" class="block w-full mt-2 text-gray-600 border border-gray-300 rounded p-2 bg-gray-50" required>
+        <p class="text-xs text-gray-500 mt-2">Please attach your payment screenshot to complete registration.</p>
+      </div>
+
+      <!-- Submit -->
+      <div class="text-center mt-8">
+        <button type="submit" id="submitBtn" class="bg-blue-700 text-white px-6 py-2 rounded-md hover:bg-blue-800" disabled>
+          Submit Registration
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const adultFee = 99;
+    const childFee = 49;
+
+    function generateForms() {
+      const numAdults = parseInt(document.getElementById("numAdults").value) || 0;
+      const numChildren = parseInt(document.getElementById("numChildren").value) || 0;
+      const container = document.getElementById("participantForms");
+      container.innerHTML = "";
+
+      for (let i = 0; i < numAdults; i++) {
+        container.appendChild(createForm(i + 1, 'Adult'));
+      }
+
+      for (let i = 0; i < numChildren; i++) {
+        container.appendChild(createForm(i + 1, 'Child'));
+      }
+
+      const total = numAdults * adultFee + numChildren * childFee;
+      document.getElementById("totalFee").value = total;
+    }
+
+    function createForm(index, type) {
+      const div = document.createElement("div");
+      div.className = "border p-4 rounded-lg bg-gray-50";
+
+      div.innerHTML = `
+        <h3 class="text-lg font-semibold text-blue-700 mb-4">${type} ${index}</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">First Name</label>
+            <input type="text" name="${type}FirstName${index}" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Last Name</label>
+            <input type="text" name="${type}LastName${index}" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" name="${type}Email${index}" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Phone</label>
+            <input type="tel" name="${type}Phone${index}" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700">Address</label>
+            <input type="text" name="${type}Address${index}" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700">Event</label>
+            <select name="${type}Event${index}" required class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+              <option value="">Select an Event</option>
+              <option>Debugging</option>
+              <option>Reverse Coding</option>
+              <option>Quiz</option>
+              <option>Workshops</option>
+              <option>Web Development</option>
+              <option>Debut</option>
+              <option>Python Coding</option>
+            </select>
+          </div>
+        </div>
+      `;
+      return div;
+    }
+
+    // Enable submit button only when screenshot is attached
+    const screenshotInput = document.getElementById('paymentScreenshot');
+    const submitBtn = document.getElementById('submitBtn');
+    screenshotInput.addEventListener('change', function () {
+      submitBtn.disabled = !screenshotInput.files.length;
+    });
+
+    function handleSubmit(event) {
+      event.preventDefault();
+
+      const numAdults = parseInt(document.getElementById("numAdults").value) || 0;
+      const numChildren = parseInt(document.getElementById("numChildren").value) || 0;
+      const participants = [];
+
+      // Collect data for Adults
+      for (let i = 1; i <= numAdults; i++) {
+        participants.push({
+          type: "Adult",
+          first_name: document.querySelector(`[name="AdultFirstName${i}"]`).value,
+          last_name: document.querySelector(`[name="AdultLastName${i}"]`).value,
+          email: document.querySelector(`[name="AdultEmail${i}"]`).value,
+          phone: document.querySelector(`[name="AdultPhone${i}"]`).value,
+          address: document.querySelector(`[name="AdultAddress${i}"]`).value,
+          event: document.querySelector(`[name="AdultEvent${i}"]`).value,
+          fee: 99
+        });
+      }
+
+      // Collect data for Children
+      for (let i = 1; i <= numChildren; i++) {
+        participants.push({
+          type: "Child",
+          first_name: document.querySelector(`[name="ChildFirstName${i}"]`).value,
+          last_name: document.querySelector(`[name="ChildLastName${i}"]`).value,
+          email: document.querySelector(`[name="ChildEmail${i}"]`).value,
+          phone: document.querySelector(`[name="ChildPhone${i}"]`).value,
+          address: document.querySelector(`[name="ChildAddress${i}"]`).value,
+          event: document.querySelector(`[name="ChildEvent${i}"]`).value,
+          fee: 49
+        });
+      }
+
+      // Check screenshot
+      const screenshotFile = screenshotInput.files[0];
+      if (!screenshotFile) {
+        alert("Please attach your payment screenshot before submitting.");
+        return;
+      }
+
+      // Prepare form data for file upload and JSON
+      const formData = new FormData();
+      formData.append("paymentScreenshot", screenshotFile);
+      formData.append("participants", JSON.stringify(participants));
+
+      fetch("http://localhost:5000/api/register-group", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          // Store groupId for confirmation page and redirect
+          localStorage.setItem('groupId', data.group_id);
+          window.location.href = "registration-confirmed.html";
+        } else {
+          alert("Error submitting registration. Please try again.");
+        }
+      })
+      .catch(error => {
+        alert("Error submitting registration. Please try again.");
+        console.error(error);
+      });
+    }
+
+    window.onload = generateForms;
+    document.getElementById('participantsForm').addEventListener('submit', handleSubmit);
+  </script>
+</body>
+</html>
