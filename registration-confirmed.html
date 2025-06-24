@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vibow - Registration Confirmed</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-700 via-blue-400 to-blue-200 min-h-screen flex flex-col">
+
+  <!-- Navigation Bar -->
+  <nav class="bg-white bg-opacity-90 shadow-md fixed top-0 left-0 w-full z-10">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-extrabold text-blue-700 tracking-widest drop-shadow-md">Vibow</h1>
+      <div class="space-x-6">
+        <a href="welcome.html" class="text-gray-700 font-semibold hover:text-blue-700 transition">Home</a>
+        <a href="index.html" class="text-gray-700 font-semibold hover:text-blue-700 transition">Sign Up / Login</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Confirmation Section -->
+  <main class="flex-grow flex flex-col items-center justify-center pt-24 pb-12">
+    <div class="bg-white bg-opacity-90 shadow-2xl rounded-3xl p-12 max-w-xl w-full text-center animate-fade-in">
+      <div class="flex justify-center mb-6">
+        <svg class="w-24 h-24 text-green-500 animate-bounce drop-shadow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 48 48">
+          <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-opacity="0.2" stroke-width="4"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14 26l7 7 13-13" class="stroke-current text-green-600" stroke-width="4"/>
+        </svg>
+      </div>
+      <h2 class="text-4xl font-extrabold text-blue-700 mb-4 drop-shadow">Registration Confirmed!</h2>
+      <p class="text-lg text-gray-700 mb-4">
+        🎉 Thank you for registering for <span class="text-blue-700 font-bold">Vibow Tech Fest</span>.<br>
+        Your group is now officially part of the event!
+      </p>
+      <div class="mb-6">
+        <span class="inline-block bg-green-100 text-green-700 px-6 py-2 rounded-full font-semibold shadow-sm text-lg">
+          Confirmation ID: <span id="groupId" class="font-mono"></span>
+        </span>
+      </div>
+      <p class="text-base text-gray-600 mb-8">We look forward to seeing you at the fest. Check your email for further updates and event details!</p>
+      <a href="event-list.html" class="inline-block px-8 py-3 bg-gradient-to-r from-blue-700 to-blue-400 text-white text-lg rounded-full font-semibold shadow-lg hover:from-blue-800 hover:to-blue-500 transition">
+        Browse Events
+      </a>
+      <div class="mt-8 text-sm text-gray-500">
+        <span>Want to register another group?</span>
+        <a href="registration.html" class="text-blue-600 hover:underline font-semibold">Back to Registration</a>
+      </div>
+    </div>
+  </main>
+
+  <style>
+    @keyframes fade-in {
+      0% { opacity: 0; transform: scale(0.98);}
+      100% { opacity: 1; transform: scale(1);}
+    }
+    .animate-fade-in {
+      animation: fade-in 1s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    body {
+      background-attachment: fixed;
+    }
+  </style>
+
+  <script>
+    // Display groupId from localStorage, then clear it so it doesn't appear to every user
+    document.addEventListener('DOMContentLoaded', () => {
+      const groupId = localStorage.getItem('groupId');
+      document.getElementById('groupId').textContent = groupId ? groupId : "N/A";
+      // Remove after showing once
+      localStorage.removeItem('groupId');
+    });
+  </script>
+</body>
+</html>
