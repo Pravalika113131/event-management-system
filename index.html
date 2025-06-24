@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vibow - Tech Fest Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-screen bg-gray-100 font-sans">
+
+  <!-- 🌐 Top Navigation Bar -->
+  <nav class="bg-white shadow-md fixed top-0 left-0 w-full z-10">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-blue-700">Vibow</h1>
+    <div class="space-x-6">
+      <a href="welcome.html" class="text-gray-700 hover:text-blue-700">Home</a>
+      <a href="registration.html" class="text-gray-700 hover:text-blue-700">Registration</a>
+      <a href="event-list.html" class="text-gray-700 hover:text-blue-700">Events List</a>
+      <a href="event-details.html" class="text-gray-700 hover:text-blue-700">Event Details</a>
+      <a href="contact.html" class="text-gray-700 hover:text-blue-700">Contact</a>
+      <a href="services.html" class="text-gray-700 hover:text-blue-700">Services</a>
+    </div>
+  </div>
+</nav>
+
+  <!-- 🔲 Split Layout Below Navbar -->
+  <div class="flex h-screen pt-16">
+
+    <!-- Left Side: Title -->
+    <div class="w-1/2 bg-blue-700 text-white flex flex-col justify-center items-center p-10">
+      <h1 class="text-5xl font-bold mb-4">Welcome to</h1>
+      <h2 class="text-7xl font-extrabold tracking-wide">Vibow</h2>
+      <p class="mt-4 text-lg text-blue-100 max-w-md text-center">
+        The Ultimate Tech Fest. Gear up for innovation, collaboration, and fun!
+      </p>
+    </div>
+
+    <!-- Right Side: Login Form -->
+    <div class="w-1/2 bg-white flex items-center justify-center p-10">
+      <div class="w-full max-w-sm">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Login</h2>
+        <form class="space-y-4" id="loginForm">
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" id="email" placeholder="you@example.com" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+          </div>
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" id="password" placeholder="••••••••" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+          </div>
+          <button type="submit" class="w-full py-2 px-4 bg-blue-700 text-white rounded-md hover:bg-blue-800 transition duration-200">Login</button>
+        </form>
+        <p class="mt-4 text-sm text-center text-gray-500">Don't have an account? <a href="signup.html" class="text-blue-700 hover:underline">Register</a></p>
+      </div>
+    </div>
+
+  </div>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      fetch('http://localhost:5000/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+      })
+      .then(res => res.json())
+      .then(data => {
+          if(data.status === 'success') {
+              // Optionally store user info: localStorage.setItem('user', JSON.stringify(data.user));
+              // Redirect to the welcome page after login
+              window.location.href = "welcome.html";
+          } else {
+              alert(data.message || "Login failed. Please try again.");
+          }
+      })
+      .catch(() => alert("Login failed. Please try again."));
+    });
+  </script>
+</body>
+</html>
